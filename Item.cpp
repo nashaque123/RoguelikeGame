@@ -7,7 +7,7 @@ Item::Item()
     m_shape.setFillColor(sf::Color::Red);
     m_position.x = rand() % 700 + 50;
     m_position.y = rand() % 500 + 50;
-    m_shape.setPosition(m_position.x, m_position.y);
+    m_shape.setPosition(m_position);
 }
 
 Item::~Item()

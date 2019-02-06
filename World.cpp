@@ -6,16 +6,18 @@
 World::World() : m_window(sf::VideoMode(800.f, 600.f), "hello")
 {
     //ctor
+    m_player1 = new Player();
 }
 
 World::~World()
 {
     //dtor
+    delete m_player1;
+    m_player1 = nullptr;
 }
 
 void World::Run()
 {
-    Player player1;
     Map gameMap;
     Item items[3];
 
@@ -33,7 +35,7 @@ void World::Run()
                 m_window.close();
                 break;
             case sf::Event::KeyPressed:
-                player1.Move(event);
+                m_player1->Move(event, gameMap);
             default:
                 break;
             }
@@ -42,7 +44,7 @@ void World::Run()
         m_window.clear();
 
         gameMap.Render(m_window);
-        player1.Render(m_window);
+        m_player1->Render(m_window);
 
         for (int i = 0; i < 3; i++)
             items[i].Render(m_window);

@@ -15,6 +15,7 @@ Map::~Map()
 void Map::Render(sf::RenderWindow &window)
 {
     m_position = {20.f, 20.f};
+    m_positionsVector.push_back(m_position);
 
     for (int row = 0; row < kGridRows; row++)
     {
@@ -22,7 +23,8 @@ void Map::Render(sf::RenderWindow &window)
         {
             if (m_map[row][col] == 'W')
             {
-                m_wall.setPosition(m_position.x, m_position.y);
+                m_wall.setPosition(m_position);
+                m_positionsVector.push_back(m_position);
                 window.draw(m_wall);
             }
 

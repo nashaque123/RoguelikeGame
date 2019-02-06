@@ -1,12 +1,14 @@
 #include "Player.h"
+#include "Map.h"
+#include <iostream>
 
 Player::Player()
 {
     //ctor
     // Create an instance of the SFML CircleShape and initialise it so radius is 100 and set to green
-    m_shape.setRadius(10.f);
+    m_shape.setRadius((m_stepSize / 2));
     m_shape.setFillColor(sf::Color::Green);
-    m_shape.setPosition(m_position.x, m_position.y);
+    m_shape.setPosition(m_position);
 }
 
 Player::~Player()
@@ -14,43 +16,96 @@ Player::~Player()
     //dtor
 }
 
-void Player::Move(sf::Event event)
+void Player::Move(sf::Event event, Map& wall)
 {
     switch(event.key.code)
     {
-    case sf::Keyboard::Numpad1:
-        m_position.x -= m_stepSize;
-        m_position.y += m_stepSize;
+    case sf::Keyboard::Up:
+        if (!UpWallCollision(wall))
+            m_position.y -= m_stepSize;
         break;
-    case sf::Keyboard::Numpad2:
-        m_position.y += m_stepSize;
+    case sf::Keyboard::Down:
+        if (!DownWallCollision(wall))
+            m_position.y += m_stepSize;
         break;
-    case sf::Keyboard::Numpad3:
-        m_position.x += m_stepSize;
-        m_position.y += m_stepSize;
+    case sf::Keyboard::Left:
+        if (!LeftWallCollision(wall))
+            m_position.x -= m_stepSize;
         break;
-    case sf::Keyboard::Numpad4:
-        m_position.x -= m_stepSize;
-        break;
-    case sf::Keyboard::Numpad6:
-        m_position.x += m_stepSize;
-        break;
-    case sf::Keyboard::Numpad7:
-        m_position.x -= m_stepSize;
-        m_position.y -= m_stepSize;
-        break;
-    case sf::Keyboard::Numpad8:
-        m_position.y -= m_stepSize;
-        break;
-    case sf::Keyboard::Numpad9:
-        m_position.x += m_stepSize;
-        m_position.y -= m_stepSize;
+    case sf::Keyboard::Right:
+        if (!RightWallCollision(wall))
+            m_position.x += m_stepSize;
         break;
     default:
         break;
     }
 
-    m_shape.setPosition(m_position.x, m_position.y);
+    m_shape.setPosition(m_position);
+}
+
+//Checks if there will be a collision with the wall if they move upwards
+//Checks step ahead to see if there is a wall in the way
+bool Player::UpWallCollision(Map& wall)
+{
+    std::vector<sf::Vector2f> wallPositions = wall.GetPositions();
+
+    for (unsigned int i = 0; i < wallPositions.size(); i++)
+    {
+        float distance = m_position.y - (wallPositions[i].y + wall.GetSize());
+
+        if (m_position.x == wallPositions[i].x && distance < m_stepSize && distance >= 0)
+            return true;
+    }
+
+    return false;
+}
+
+//Checks if there will be a collision with the wall if they move downwards
+bool Player::DownWallCollision(Map& wall)
+{
+    std::vector<sf::Vector2f> wallPositions = wall.GetPositions();
+
+    for (unsigned int i = 0; i < wallPositions.size(); i++)
+    {
+        float distance = wallPositions[i].y - (m_position.y + m_stepSize);
+
+        if (m_position.x == wallPositions[i].x && distance < m_stepSize && distance >= 0)
+            return true;
+    }
+
+    return false;
+}
+
+//Checks if there will be a collision with the wall if they move to the left
+bool Player::LeftWallCollision(Map& wall)
+{
+    std::vector<sf::Vector2f> wallPositions = wall.GetPositions();
+
+    for (unsigned int i = 0; i < wallPositions.size(); i++)
+    {
+        float distance = m_position.x - (wallPositions[i].x + wall.GetSize());
+
+        if (m_position.y == wallPositions[i].y && distance < m_stepSize && distance >= 0)
+            return true;
+    }
+
+    return false;
+}
+
+//Checks if there will be a collision with the wall if they move to the right
+bool Player::RightWallCollision(Map& wall)
+{
+    std::vector<sf::Vector2f> wallPositions = wall.GetPositions();
+
+    for (unsigned int i = 0; i < wallPositions.size(); i++)
+    {
+        float distance = wallPositions[i].x - (m_position.x + m_stepSize);
+
+        if (m_position.y == wallPositions[i].y && distance < m_stepSize && distance >= 0)
+            return true;
+    }
+
+    return false;
 }
 
 void Player::Render(sf::RenderWindow& window)

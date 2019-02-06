@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+class Player;
+
 class World
 {
 public:
@@ -17,6 +19,8 @@ private:
     // Create an instance of the SFML RenderWindow type which represents the display
     // and initialise its size and title text
     sf::RenderWindow m_window;
+
+    Player *m_player1;
 };
 
 #endif // WORLD_H
