@@ -356,9 +356,11 @@
 	<string>
 	<vector>
 
-1549459108 source:c:\users\s6061420\source\roguelikegame\main.cpp
+1549461124 source:c:\users\s6061420\source\roguelikegame\main.cpp
 	<iostream>
 	<SFML/Graphics.hpp>
+	"World.h"
+	"Player.h"
 
 1486739998 c:\users\s6061420\source\roguelikegame\sfml-2.4.2\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -754,10 +756,24 @@
 1549461010 c:\users\s6061420\source\roguelikegame\player.h
 	<SFML/Graphics.hpp>
 
-1549461069 source:c:\users\s6061420\source\roguelikegame\world.cpp
+1549461471 source:c:\users\s6061420\source\roguelikegame\world.cpp
 	"World.h"
 	"Player.h"
+	"Map.h"
+	"Item.h"
 
 1549461010 c:\users\s6061420\source\roguelikegame\world.h
+	<SFML/Graphics.hpp>
+
+1549461427 source:c:\users\s6061420\source\roguelikegame\item.cpp
+	"Item.h"
+
+1549461427 c:\users\s6061420\source\roguelikegame\item.h
+	<SFML/Graphics.hpp>
+
+1549461427 source:c:\users\s6061420\source\roguelikegame\map.cpp
+	"Map.h"
+
+1549461566 c:\users\s6061420\source\roguelikegame\map.h
 	<SFML/Graphics.hpp>
 

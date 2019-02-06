@@ -1,5 +1,7 @@
 #include "World.h"
 #include "Player.h"
+#include "Map.h"
+#include "Item.h"
 
 World::World() : m_window(sf::VideoMode(800.f, 600.f), "hello")
 {
@@ -14,6 +16,8 @@ World::~World()
 void World::Run()
 {
     Player player1;
+    Map gameMap;
+    Item items[3];
 
     // Main loop that continues until we call Close()
     while (m_window.isOpen())
@@ -36,7 +40,13 @@ void World::Run()
         }
 
         m_window.clear();
+
+        gameMap.Render(m_window);
         player1.Render(m_window);
+
+        for (int i = 0; i < 3; i++)
+            items[i].Render(m_window);
+
         m_window.display();
     }
 }
